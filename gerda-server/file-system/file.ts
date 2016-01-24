@@ -20,23 +20,23 @@ module Gerda.Arendelle {
 			Header: string;
 		
 			/** Path to the file */
-			Path: string;
+			Path: 	string;
 		
 			/** File name: */
-			Name: string;
+			Name: 	string;
 			
 			/** File Type */
-			Type: FileType;
+			Type: 	FileType;
 		
 		//
 		// ─── FUNCS ──────────────────────────────────────────────────────────────────────
 		//
 		
 			/** Class constructor */
-			constructor ( name: string , path: string , headerContent: string , space: boolean ) {
-				this.Header = headerContent;
-				this.Name = name;
-				this.Path = path;
+			constructor ( name: string , path: string , content: string , space: boolean ) {
+				this.Header = content;
+				this.Name 	= name;
+				this.Path 	= path;
 				
 				if ( space )
 					this.Type = FileType.Space;	
@@ -67,12 +67,9 @@ module Gerda.Arendelle {
 	 * ────────────────────────────────────────────────────────────────────────────────────────── */
 
 	export enum FileType {
-		
 		/** Arendelle '.arendelle' blueprit files */
 		Arendelle,
-		
 		/** Arendelle '.space' stored space files */
-		Space
-		
+		Space	
 	}
 }
