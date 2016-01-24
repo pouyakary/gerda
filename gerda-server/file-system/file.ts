@@ -12,6 +12,7 @@ module Gerda.Arendelle {
 	 * ::::::::::::::::::::::::::::::::::: F I L E   C L A S S :::::::::::::::::::::::::::::::::: *
 	 * ────────────────────────────────────────────────────────────────────────────────────────── */
 	 
+	/** Arendele '.space' / '.arendelle' files */
 	export class File extends FileSystemObject {
 		
 		//
@@ -19,7 +20,7 @@ module Gerda.Arendelle {
 		//
 		
 			/** Where we store the file content */
-			Header: string;
+			HeaderSpaces: Array<string>;
 			
 			/** File Type */
 			Type: 	FileType;
@@ -29,28 +30,40 @@ module Gerda.Arendelle {
 		//
 		
 			/** Class constructor */
-			constructor ( name: string , path: string , content: string , space: boolean ) {
-				super();
-		
-				this.Header = content;
-				
+			constructor ( name: string , path: string , content: string , space: boolean) {
+				super( path , name );
+				this.HeaderSpaces = new Array<string>();
 				if ( space )
 					this.Type = FileType.Space;	
 				else
 					this.Type = FileType.Arendelle;
 			}
 			
+			
 			/** Generates the full path of the file */
-			FullPath ( ) :string {
+			FullPath ( ): string {
 				return this.Path + '/' + this.Name + this.GetFileTypeEnd();
 			}
 			
-			/** */
-			GetFileTypeEnd ( ) :string {
+			
+			/** Get's the file type string for the Arendelle files */
+			GetFileTypeEnd ( ): string {
 				if ( this.Type == FileType.Space )
 					return '.space';
 				else
 					return '.arendelle';
+			}
+		
+		
+			/** Generates file header */
+		 	GetSpaceNamesByHeader ( text: string ): Array<string> {
+				var results = new Array<string>();
+				
+				//
+				// TO BE ADDED
+				//
+				
+				return results;
 			}
 		
 		// ────────────────────────────────────────────────────────────────────────────────
