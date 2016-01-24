@@ -3,9 +3,12 @@
 		"module": "commonjs",
 		"noImplicitAny": true,
 		"preserveConstEnums": true,
-        "out": "gerda.js"
+        "out": "binary/gerda-compiled.js"
     },
     "files": [
-		"gerda-server/file-system/file.ts"
+		"gerda-server/file-system/file.ts",
+		"gerda-server/file-system/directory.ts",
+		"gerda-server/file-system/file-object.ts",
+		"gerda-servel/kernel/space-finder.ts"
 	]
 }
