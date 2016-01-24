@@ -4,68 +4,42 @@
 //    Author: Pouya Kary <k@karyfoundation.org>
 //
 
+/// <reference path="file.ts" />
 /// <reference path="file-object.ts" />
 
 module Gerda.Arendelle {	
 	
 	/* ────────────────────────────────────────────────────────────────────────────────────────── *
-	 * ::::::::::::::::::::::::::::::::::: F I L E   C L A S S :::::::::::::::::::::::::::::::::: *
+	 * :::::::::::::::::::::::::::::: D I R E C T O R Y   C L A S S ::::::::::::::::::::::::::::: *
 	 * ────────────────────────────────────────────────────────────────────────────────────────── */
-	 
-	export class File extends FileSystemObject {
+
+	export class Directory extends FileSystemObject {
 		
 		//
 		// ─── STORAGE ────────────────────────────────────────────────────────────────────
 		//
 		
-			/** Where we store the file content */
-			Header: string;
+			/** Files and Subdirectories of the Directory */
+			Contents: Array<FileSystemObject>
 			
-			/** File Type */
-			Type: 	FileType;
-		
 		//
 		// ─── FUNCS ──────────────────────────────────────────────────────────────────────
 		//
 		
 			/** Class constructor */
-			constructor ( name: string , path: string , content: string , space: boolean ) {
+			constructor ( path: string , name: string ) {
 				super();
-		
-				this.Header = content;
-				
-				if ( space )
-					this.Type = FileType.Space;	
-				else
-					this.Type = FileType.Arendelle;
+				this.Path = path;
+				this.Name = name;
 			}
 			
-			/** Generates the full path of the file */
-			FullPath ( ) :string {
-				return this.Path + '/' + this.Name + this.GetFileTypeEnd();
+			/** Adds files / directories to the directory */
+			AppendFileObject ( fileObject: FileSystemObject ) {
+				this.Contents.push( fileObject );
 			}
 			
-			/** */
-			GetFileTypeEnd ( ) :string {
-				if ( this.Type == FileType.Space )
-					return '.space';
-				else
-					return '.arendelle';
-			}
-		
 		// ────────────────────────────────────────────────────────────────────────────────
 
 	}
-	
-	
-	/* ────────────────────────────────────────────────────────────────────────────────────────── *
-	 * ::::::::::::::::::::::::::::::::::: F I L E   T Y P E S :::::::::::::::::::::::::::::::::: *
-	 * ────────────────────────────────────────────────────────────────────────────────────────── */
 
-	export enum FileType {
-		/** Arendelle '.arendelle' blueprit files */
-		Arendelle,
-		/** Arendelle '.space' stored space files */
-		Space	
-	}
 }
