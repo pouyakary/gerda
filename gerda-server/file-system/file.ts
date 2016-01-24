@@ -1,6 +1,7 @@
 //
 // Gerda - The optimized Arendelle itelegent auto suggestion's server
-//    Copyright 2016 - Pouya Kary <k@arendelle.org>
+//    Copyright 2016 Kary Foundation, Inc.
+//    Author: Pouya Kary <k@karyfoundation.org>
 //
 
 module Gerda.Arendelle {	
@@ -16,7 +17,7 @@ module Gerda.Arendelle {
 		//
 		
 			/** Where we store the file content */
-			Content: string;
+			Header: string;
 		
 			/** Path to the file */
 			Path: string;
@@ -32,8 +33,8 @@ module Gerda.Arendelle {
 		//
 		
 			/** Class constructor */
-			constructor ( name: string , path: string , content: string , space: boolean ) {
-				this.Content = content;
+			constructor ( name: string , path: string , headerContent: string , space: boolean ) {
+				this.Header = headerContent;
 				this.Name = name;
 				this.Path = path;
 				
