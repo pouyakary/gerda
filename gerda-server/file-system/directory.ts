@@ -26,12 +26,14 @@ module Gerda.Arendelle {
 		// ─── FUNCS ──────────────────────────────────────────────────────────────────────
 		//
 		
-			/** Class constructor */
-			constructor ( path: string , name: string ) {
-				super();
-				this.Path = path;
-				this.Name = name;
-			}
+			/**
+			 *  After runnig the constructor add files and sub-directories
+			 *  via the AppendFileObject function.
+			 * */
+			constructor ( path: string , name:string ) {
+				super ( path , name );
+			} 
+			
 			
 			/** Adds files / directories to the directory */
 			AppendFileObject ( fileObject: FileSystemObject ) {
