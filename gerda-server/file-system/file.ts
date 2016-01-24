@@ -59,9 +59,9 @@ module Gerda.Arendelle {
 		 	GetSpaceNamesByHeader ( text: string ): Array<string> {
 				var results = new Array<string>();
 				
-				//
-				// TO BE ADDED
-				//
+					//
+					// TO BE ADDED
+					//
 				
 				return results;
 			}
@@ -81,4 +81,5 @@ module Gerda.Arendelle {
 		/** Arendelle '.space' stored space files */
 		Space	
 	}
+	
 }
