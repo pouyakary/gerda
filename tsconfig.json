@@ -9,6 +9,6 @@
 		"gerda-server/file-system/file.ts",
 		"gerda-server/file-system/directory.ts",
 		"gerda-server/file-system/file-object.ts",
-		"gerda-servel/kernel/space-finder.ts"
+		"gerda-server/kernel/space-finder.ts"
 	]
 }
