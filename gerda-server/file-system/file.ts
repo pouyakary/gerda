@@ -6,7 +6,7 @@
 
 /// <reference path="file-object.ts" />
 
-module Gerda.Arendelle {	
+module Arendelle.FileSystem {	
 	
 	/* ────────────────────────────────────────────────────────────────────────────────────────── *
 	 * ::::::::::::::::::::::::::::::::::: F I L E   C L A S S :::::::::::::::::::::::::::::::::: *
@@ -20,7 +20,7 @@ module Gerda.Arendelle {
 		//
 		
 			/** Where we store the file content */
-			HeaderSpaces: Array<string>;
+			Content: string;
 			
 			/** File Type */
 			Type: 	FileType;
@@ -32,7 +32,7 @@ module Gerda.Arendelle {
 			/** Class constructor */
 			constructor ( name: string , path: string , content: string , space: boolean) {
 				super( path , name );
-				this.HeaderSpaces = new Array<string>();
+				this.Content = content;
 				if ( space )
 					this.Type = FileType.Space;	
 				else
@@ -52,18 +52,6 @@ module Gerda.Arendelle {
 					return '.space';
 				else
 					return '.arendelle';
-			}
-		
-		
-			/** Generates file header */
-		 	GetSpaceNamesByHeader ( text: string ): Array<string> {
-				var results = new Array<string>();
-				
-					//
-					// TO BE ADDED
-					//
-				
-				return results;
 			}
 		
 		// ────────────────────────────────────────────────────────────────────────────────

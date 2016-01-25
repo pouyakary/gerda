@@ -4,7 +4,7 @@
 //    Author: Pouya Kary <k@karyfoundation.org>
 //
 
-module Gerda.Arendelle {
+module Arendelle.FileSystem {
 	
 	/* ────────────────────────────────────────────────────────────────────────────────────────── *
 	 * ::::::::::::::::::::::::::: F I L E   S Y S T E M   O B J E C T :::::::::::::::::::::::::: *
