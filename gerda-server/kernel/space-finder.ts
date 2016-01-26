@@ -47,7 +47,7 @@ module Gerda.Kernel {
 						}
 					});
 					
-					// So let's add it
+					// So let's add it if it's not allready there
 					if ( !exists ) { 
 						scoped_spaces.push( [ scope_level , finding ] ); 
 					}
@@ -58,6 +58,7 @@ module Gerda.Kernel {
 				scope_level++;
 			} else if ( ( current_char == ']' || current_char == '}' ) && scope_level > 0 ) {
 				var new_scoped_spaces_list = new Array<Array<Object>>();
+				
 				// Removing the spaces that were declared within the current space
 				scoped_spaces.forEach( space_with_scope => {
 					if ( space_with_scope[ 0 ] != scope_level ) {
@@ -65,6 +66,7 @@ module Gerda.Kernel {
 					}
 				});
 				scoped_spaces = new_scoped_spaces_list;
+				
 				scope_level--;
 			}
 		}
