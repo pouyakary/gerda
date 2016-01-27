@@ -1,17 +1,20 @@
+# Gerda
+
 ![](http://kary.us/GitHubWideImages/gerda/screen.png)
 
-# Gerda
 Garda is an intelligent autosuggestion server for web. Specially designed to work with [Arendelle Studio](http://web.arendelle.org/studio/)
+
+***
 
 ## Functions
 
-### Scanners
+#### Scanners
 
 - Scoped based space suggestion.
 - Function suggestion.
 - Stored Space suggestion.
 
-### Suggestion Server
+#### Suggestion Server
 
 - Provides instant suggestion server for the IDE
 
@@ -22,11 +25,26 @@ The module structure of the Gerda comes as:
 - Gerda 
 	- [Kernel](https://github.com/arendelle/gerda/tree/master/gerda-server/kernel): Where the lexers and scanners are
 	- [Server](https://github.com/arendelle/gerda/tree/master/gerda-server/server): Where the 
+	
+## Build Info
+You can compile the the library to pure JavaScript. In the make file there is a command for it:
+
+```
+% make build
+```
+
+There is also an [electron](http://electron.atom.io) interactive playground that lets you see the suggestion list instantly. You can run it via
+
+```
+% make electron
+```
 		
+***		
+	
 ## License
 
 ```
-Gerda - The optimized Arendelle itelegent auto suggestion's server
+Gerda - The optimized Arendelle intelligent auto suggestion's server
   Copyright (c) 2016 Kary Foundation, Inc.
   Author: Pouya Kary <k@karyfoundation.org>
 
