@@ -3,7 +3,7 @@
 		"module": "commonjs",
 		"noImplicitAny": true,
 		"preserveConstEnums": true,
-        "out": "binary/gerda-compiled.js"
+        "out": "playground/gerda-compiled.js"
     },
     "files": [
 		"gerda-server/file-system/file.ts",
