@@ -1,0 +1,56 @@
+
+/*
+ * Gerda - The optimized Arendelle itelegent auto suggestion's server
+ *    Copyright 2016 Kary Foundation, Inc.
+ *    Author: Pouya Kary <k@karyfoundation.org>
+ */
+
+body {
+	background-color: #9A9A9A;
+	padding: 			0px;
+	margin: 			0px;
+}
+
+textarea {
+	background-color:#424242;
+	border-radius:     5px;
+	color:           white;
+	border:            0;
+	padding:           20px;
+	width:             40vw;
+	height:            84vh;
+	font-family:       Consolas;
+	font-size:         14px;
+	outline-color:     transparent;
+	outline-style:     none;
+	resize:            none;
+}
+
+.half {
+	padding-top: 	8vh;
+	float: 			left;
+	width: 			50vw;
+}
+
+#display {
+	border-radius: 		5px;
+	padding: 			2vh;
+	background-color: 	#424242;
+	width: 				40vw;
+	height: 			80vh;
+}
+
+.item {
+	background-color:  white;
+	color:             black;
+	font-family:       Consolas;
+	padding:           7px;
+	margin-left:       10px;
+	margin-top:        13px;
+	border-radius:     22px;
+	padding-right:     13px;
+	padding-left:      13px;
+	font-size:         13px;
+	float:             left;
+	letter-spacing:    1.2;
+}
