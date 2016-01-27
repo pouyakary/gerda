@@ -28,29 +28,26 @@ module Gerda.Kernel {
 				// Finds the stuff between '(' and ',' or ')'
 				while ( current_char != ',' && current_char && index < caretLocation ) {
 					finding += current_char;
-					if ( index < caretLocation - 1 ) {
-						index++; current_char = blueprintText[ index ];
-					} else {
+					if ( index < caretLocation - 1 )
+						{ index++; current_char = blueprintText[ index ]; }
+					else
 						break;
-					}
 				}
 				
 				// Is it an space? this regex will find out
-				finding = finding.replace(' ','');
-				if ( finding.match('[a-zA-Z][a-zA-Z0-9\_]*') ) {
+				finding = finding.replace( ' ' , '' );
+				if ( finding.match( /[a-zA-Z][a-zA-Z0-9\_]?/ ) ) {
 					var exists: boolean = false;
 					
 					// To see if we have it allready
 					scoped_spaces.forEach( element => {
-						if ( element[ 1 ] == finding ) {
+						if ( element[ 1 ] == finding )
 							exists = true;
-						}
 					});
 					
 					// So let's add it if it's not allready there
-					if ( !exists ) { 
+					if ( !exists )
 						scoped_spaces.push( [ scope_level , finding ] ); 
-					}
 				}
 			
 			// Taking care of the scoping.
@@ -61,9 +58,8 @@ module Gerda.Kernel {
 				
 				// Removing the spaces that were declared within the current space
 				scoped_spaces.forEach( space_with_scope => {
-					if ( space_with_scope[ 0 ] != scope_level ) {
+					if ( space_with_scope[ 0 ] != scope_level )
 						new_scoped_spaces_list.push( space_with_scope );
-					}
 				});
 				scoped_spaces = new_scoped_spaces_list;
 				
