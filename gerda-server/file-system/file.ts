@@ -69,5 +69,4 @@ module Arendelle.FileSystem {
 		/** Arendelle '.space' stored space files */
 		Space	
 	}
-	
 }
