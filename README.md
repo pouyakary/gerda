@@ -1,8 +1,8 @@
 # Gerda
 
-![](http://kary.us/GitHubWideImages/gerda/screen.png)
-
 Garda is an intelligent autosuggestion server for web. Specially designed to work with [Arendelle Studio](http://web.arendelle.org/studio/)
+
+![](http://kary.us/GitHubWideImages/gerda/screen.png)
 
 ***
 
