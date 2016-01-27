@@ -1,2 +1,3 @@
-./gerda.js
-./binary/gerda-compiled.js
+gerda.js
+binary/gerda-compiled.js
+playground/node-modules/*
