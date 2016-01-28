@@ -23,8 +23,9 @@ FILES 					= $(GERDA_FILESYSTEM_FILES)
 
 # ────────────────────────────────────────────────────────────────────────────────
 
-GERDA_SIMPLE_BINARY = playground/gerda-compiled.js
-GERDA_MAIN_OUTPUT 	= playground/gerda.js
+GERDA_PLAYGROUND_SCRIPT_DIR 	= playground/scripts
+GERDA_SIMPLE_BINARY 			= $(GERDA_PLAYGROUND_SCRIPT_DIR)/gerda-compiled.js
+GERDA_MAIN_OUTPUT 				= $(GERDA_PLAYGROUND_SCRIPT_DIR)/gerda.js
 
 # ────────────────────────────────────────────────────────────────────────────────
 
@@ -65,5 +66,6 @@ electron: $(GERDA_MAIN_OUTPUT)
 	$(PLAYGROUND_BUILD_SCRIPT)
 	
 # ────────────────────────────────────────────────────────────────────────────────
+
 
 # ────────────────────────────────────────────────────────────────────────────────
