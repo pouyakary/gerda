@@ -1,5 +1,5 @@
 //
-// Gerda - The optimized Arendelle itelegent auto suggestion's server
+// Gerda - The optimized Arendelle intelligent auto suggestion's server
 //    Copyright 2016 Kary Foundation, Inc.
 //    Author: Pouya Kary <k@karyfoundation.org>
 //
@@ -25,19 +25,19 @@ module Arendelle.FileSystem {
 		//
 		// ─── FUNCS ──────────────────────────────────────────────────────────────────────
 		//
-		
+
 			/**
 			 *  After runnig the constructor add files and sub-directories
 			 *  via the AppendFileObject function.
-			 * */
+			 */
 			constructor ( path: string , name:string ) {
-				super ( path , name );
+				super ( path , name )
 			} 
 			
 			
 			/** Adds files / directories to the directory */
 			AppendFileObject ( fileObject: FileSystemObject ) {
-				this.Contents.push( fileObject );
+				this.Contents.push( fileObject )
 			}
 			
 		// ────────────────────────────────────────────────────────────────────────────────

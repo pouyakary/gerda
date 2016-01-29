@@ -20,10 +20,10 @@ module Arendelle.FileSystem {
 		//
 		
 			/** Where we store the file content */
-			Content: string;
+			Content: string
 			
 			/** File Type */
-			Type: 	FileType;
+			Type: FileType
 		
 		//
 		// ─── FUNCS ──────────────────────────────────────────────────────────────────────
@@ -31,27 +31,27 @@ module Arendelle.FileSystem {
 		
 			/** Class constructor */
 			constructor ( name: string , path: string , content: string , space: boolean) {
-				super( path , name );
-				this.Content = content;
+				super( path , name )
+				this.Content = content
 				if ( space )
-					this.Type = FileType.Space;	
+					this.Type = FileType.Space
 				else
-					this.Type = FileType.Arendelle;
+					this.Type = FileType.Arendelle
 			}
 			
 			
 			/** Generates the full path of the file */
 			FullPath ( ): string {
-				return this.Path + '/' + this.Name + this.GetFileTypeEnd();
+				return this.Path + '/' + this.Name + this.GetFileTypeEnd()
 			}
 			
 			
 			/** Get's the file type string for the Arendelle files */
 			GetFileTypeEnd ( ): string {
 				if ( this.Type == FileType.Space )
-					return '.space';
+					return '.space'
 				else
-					return '.arendelle';
+					return '.arendelle'
 			}
 		
 		// ────────────────────────────────────────────────────────────────────────────────

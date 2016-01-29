@@ -18,18 +18,18 @@ module Arendelle.FileSystem {
 		//
 		
 			/** Path to the file */
-			Path: 	string;
+			Path: string
 		
 			/** File name: */
-			Name: 	string;
+			Name: string
 			
 		//
 		// ─── FUNCS ──────────────────────────────────────────────────────────────────────
 		//
 		
-			constructor( path: string , name: string ) {
-				this.Name = name;
-				this.Path = path;
+			constructor ( path: string , name: string ) {
+				this.Name = name
+				this.Path = path
 			}
 		
 		// ────────────────────────────────────────────────────────────────────────────────
