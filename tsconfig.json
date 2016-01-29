@@ -2,13 +2,13 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"noImplicitAny": true,
-		"preserveConstEnums": true,
+		"preserveConstEnums": true, 
         "out": "playground/scripts/gerda-compiled.js"
     },
     "files": [
-		"gerda-server/file-system/file.ts",
-		"gerda-server/file-system/directory.ts",
-		"gerda-server/file-system/file-object.ts",
-		"gerda-server/kernel/space-finder.ts"
+		"server/arendelle-tools/file-system/file.ts",
+		"server/arendelle-tools/file-system/directory.ts",
+		"server/arendelle-tools/file-system/file-object.ts",
+		"server/kernel/space-finder.ts"
 	]
 }

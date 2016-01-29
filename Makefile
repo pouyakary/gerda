@@ -13,8 +13,9 @@
 
 # ────────────────────────────────────────────────────────────────────────────────
 
-GERDA_SERVER 		= ./gerda-server/
-GERDA_FILESYSTEM 	= $(GERDA_SERVER)file-system/
+GERDA_SERVER 			= ./server/
+GERDA_ARENDELLE_TOOLS	= $(GERDA_SERVER)arendelle-tools/
+GERDA_FILESYSTEM 		= $(GERDA_ARENDELLE_TOOLS)file-system/
 
 # ────────────────────────────────────────────────────────────────────────────────
 
@@ -65,7 +66,4 @@ $(GERDA_SIMPLE_BINARY): $(FILES)
 electron: $(GERDA_MAIN_OUTPUT)
 	$(PLAYGROUND_BUILD_SCRIPT)
 	
-# ────────────────────────────────────────────────────────────────────────────────
-
-
 # ────────────────────────────────────────────────────────────────────────────────
