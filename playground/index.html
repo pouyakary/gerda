@@ -1,33 +1,33 @@
 <html>
 	<head>
 		<title>Gerda Playground</title>
-		<script src="gerda.js" type="text/javascript"></script>
+		<script src="scripts/gerda.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="styles/ui.css">
 		<script>
 			function arrayToString ( spaces ) {
-				var results = "";
-				spaces.forEach(function( space ){
-					results += '<div class="item">@' + space + '</div>';
-				});
-				return results;
+				var results = ""
+				spaces.forEach ( function ( space ) {
+					results += '<div class="item">@' + space + '</div>'
+				})
+				return results
 			}
 			function updateSuggestions () {
 				// Informatin we need
-				var pad = document.getElementById("pad");
-				var display = document.getElementById("display");
-				var caret_location = pad.selectionStart;
+				var pad = document.getElementById ( "pad" )
+				var display = document.getElementById ( "display" )
+				var caret_location = pad.selectionStart
 				// Evaluating
-				var suggestions = Gerda.Kernel.GetSpaces( pad.value , caret_location );
-				console.log(suggestions);
-				display.innerHTML = arrayToString(suggestions);
+				var suggestions = Gerda.Kernel.GetSpaces ( pad.value , caret_location )
+				console.log ( suggestions )
+				display.innerHTML = arrayToString ( suggestions )
 			}
 		</script>
 	</head>
-	<body onload="updateSuggestions();">
+	<body onload="updateSuggestions( )">
 		<div>
 			<div class="half">
 				<center>
-					<textarea id="pad" onkeydown="updateSuggestions();">( space1 , 10 )
+					<textarea id="pad" onkeydown="updateSuggestions( )" onkeypress="updateSuggestions( )" onfocus="updateSuggestions( )" onclick="updateSuggestions( )" ondragend="updateSuggestions( )">( space1 , 10 )
 
 [ 1000 , 
 
