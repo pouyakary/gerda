@@ -11,13 +11,13 @@
 // ─── HEADER ─────────────────────────────────────────────────────────────────────
 //
 
-	'use strict';
+	'use strict'
 
-	const electron = require( 'electron' );
+	const electron = require( 'electron' )
 
-	const app = electron.app;
-	const BrowserWindow = electron.BrowserWindow;
-	let mainWindow;
+	const app = electron.app
+	const BrowserWindow = electron.BrowserWindow
+	let mainWindow
 
 //
 // ─── DISPLAY ────────────────────────────────────────────────────────────────────
@@ -26,32 +26,32 @@
 	function createWindow () {
 		mainWindow = new BrowserWindow ({
 			width: 800 , height: 400 
-		});
-		mainWindow.loadURL( 'file://' + __dirname + '/index.html' );
+		})
+		mainWindow.loadURL( 'file://' + __dirname + '/index.html' )
 		mainWindow.on( 'closed' , function() {
-			mainWindow = null;
-		});
+			mainWindow = null
+		})
 	}
 
 //
 // ─── MAIN ───────────────────────────────────────────────────────────────────────
 //
 
-	app.on( 'ready' , createWindow );
+	app.on( 'ready' , createWindow )
 
 //
 // ─── DISPLAY HANDLERS ───────────────────────────────────────────────────────────
 //
 
 	app.on( 'window-all-closed' , function () {
-		console.log( 'Goodbye' );
-		app.quit();
-	});
+		console.log( 'Goodbye' )
+		app.quit()
+	})
 	
 	app.on( 'activate', function () {
-		if (mainWindow === null) {
-		createWindow();
+		if ( mainWindow === null ) {
+		createWindow( )
 		}
-	});
+	})
 
 // ────────────────────────────────────────────────────────────────────────────────
