@@ -21,7 +21,7 @@ module Gerda.Kernel {
 				const spaceNameRegexRule: RegExp = /^[a-zA-Z0-9\_\s]+$/;
 
 				/** Suggested spaces within the scope */
-				var scopedSpaces: Array<IScopedSpaceNameArray> = [ 
+				var scopedSpaces: Array<IScopedSpaceWithKey> = [ 
 					[ 0 , 'return' , 'return' ] 
 				];
 				
@@ -31,16 +31,26 @@ module Gerda.Kernel {
 				/** To keep track of the character's location within the blueprint */
 				var characterLocationIndex: number = 0;
 				
+			//
+			// ─── FUNCTIONS ──────────────────────────────────────────────────────────────────
+			//
+
 				/**
 		 		 * This checks on the list to not to add a spcae that is allready declared.
 				 */
-				var IsThereNeedToAddSpace = function ( spaceKey: string ): boolean {
-					scopedSpaces.forEach( item => {
-						if ( item[ 1 ] == spaceKey ) { 
-							return false;
+				var CheckForDouplicateAndAdd = function ( spaceToCheck: IScopedSpaceWithKey ) {
+					var doHaveToAdd: boolean = true;
+					for ( var index = 0 ; index < scopedSpaces.length && doHaveToAdd ; index++ ) {
+						if ( scopedSpaces[ index ][ 1 ] == spaceToCheck[ 1 ] ) { 
+							if ( scopedSpaces[ index ][ 2 ].length < spaceToCheck[ 2 ].length ) {
+								scopedSpaces[ index ][ 2 ] = spaceToCheck[ 2 ];
+							} 
+							doHaveToAdd = false;
 						}
-					});
-					return true;
+					}
+					if ( doHaveToAdd ) {
+						scopedSpaces.push( spaceToCheck );
+					}
 				}
 				
 				
@@ -55,14 +65,8 @@ module Gerda.Kernel {
 					
 					// checking to see if it's a space name
 					if ( givenSpaceName.match( spaceNameRegexRule ) ) {
-						
-						// generating the key
-						var nameKey = givenSpaceName.replace( /^\s+|\s+$/gm , '' );
-						
-						// do we have to add it...
-						if ( IsThereNeedToAddSpace( nameKey ) ) {
-							scopedSpaces.push( [ scopeLevel , nameKey , givenSpaceName ] );
-						}
+						var nameKey = givenSpaceName.replace( / /g , '' );
+						CheckForDouplicateAndAdd( [ scopeLevel , nameKey , givenSpaceName ] );
 					}
 				} 
 
@@ -74,10 +78,8 @@ module Gerda.Kernel {
 				 * Here what we do is we escape the white spaces and comments till
 				 * we reach the point where the function header.
 				 */
-				
-				scopeLevel = 0;
-				
-				for (  ; characterLocationIndex < caretLocation ; characterLocationIndex++ ) {
+
+				for ( scopeLevel = 0 ; characterLocationIndex < caretLocation ; characterLocationIndex++ ) {
 					
 					//
 					// TOOLS
@@ -133,18 +135,19 @@ module Gerda.Kernel {
 					var ReadAndParseHeader = function ( ) {
 						var headerText: string = '';
 						NextCharacter( );
+						
 						// reading the header
 						while ( currentChar != '>' && characterLocationIndex < caretLocation - 1 ) {
 							headerText += currentChar;
 							NextCharacter( );
 						}
+						
 						// getting the spaces and adding them to the scoped spaces
 						var possibleSpaceDeclerations =	headerText.split( ',' );
 						possibleSpaceDeclerations.forEach( possibleSpaceName => {
 							AppendSpace( possibleSpaceName );
 						});
 					}
-					
 					
 					
 					//
@@ -155,6 +158,7 @@ module Gerda.Kernel {
 						NextCharacter( );			
 					} else if ( currentChar == '/' && characterLocationIndex + 1 < caretLocation ) {
 						NextCharacter( );
+						
 						// where we escape the comments:
 						if ( currentChar == '-' ) {
 							EscapeOneLineComments( '/' );
@@ -162,9 +166,11 @@ module Gerda.Kernel {
 							NextCharacter( );
 							EscapeSlashStarComments( '/' , '*' );
 						} 
+						
 					} else if ( currentChar == '<' ) {
 						ReadAndParseHeader( );
 					} else {
+						
 						/*
 						 * there is no function header so we just get out and continue
 						 * the scannig for normal scope declerations
@@ -177,10 +183,9 @@ module Gerda.Kernel {
 			// ─── BODY SCANNER ───────────────────────────────────────────────────────────────
 			//
 			
-				scopeLevel = 1;
 				var readingWhiteSpaceInSpaceName: boolean = false;
 
-				for ( ; characterLocationIndex < caretLocation ; characterLocationIndex++ ) {
+				for ( scopeLevel = 1 ; characterLocationIndex < caretLocation ; characterLocationIndex++ ) {
 					var currentChar = blueprintText[ characterLocationIndex ];
 					
 					// If there's an space decleration...
@@ -190,6 +195,7 @@ module Gerda.Kernel {
 
 						// Finds the stuff between '(' and ',' or ')'
 						while ( currentChar != ',' && currentChar && characterLocationIndex < caretLocation ) {
+							
 							// this system here makes all the white spaces count as one space
 							if ( currentChar == ' ' || currentChar == '\t' || currentChar == '\n' ) {
 								if ( !readingWhiteSpaceInSpaceName ) {
@@ -218,14 +224,15 @@ module Gerda.Kernel {
 						scopedSpaces = RemoveSpacesInTheCurrentScope( scopedSpaces , scopeLevel );
 						scopeLevel--;
 					}
-				}
+					
+				} // end of for ( scopeLevel = 1 ; characterLocationIndex < caretLocation ; characterLocationIndex++ )
 
 			// ────────────────────────────────────────────────────────────────────────────────
 
 				return GetSpacesByScopedSpacesArray( scopedSpaces );
 
 			// ────────────────────────────────────────────────────────────────────────────────
-		}
+		} // end of function GetSpaces
 	
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -233,8 +240,8 @@ module Gerda.Kernel {
 		 * Takes the scoped spaces array with the scope_level and removes the 
 		 * spaces declared within the current scope level.
 		 */
-		var RemoveSpacesInTheCurrentScope = function ( scopedSpaces: Array<IScopedSpaceNameArray> , scopeLevel: number ) {
-			var newScopedSpacesList = new Array<IScopedSpaceNameArray>( );
+		var RemoveSpacesInTheCurrentScope = function ( scopedSpaces: Array<IScopedSpaceWithKey> , scopeLevel: number ) {
+			var newScopedSpacesList = new Array<IScopedSpaceWithKey>( );
 			scopedSpaces.forEach( spaceWithScope => {
 				if ( spaceWithScope[ 0 ] != scopeLevel ) {
 					newScopedSpacesList.push( spaceWithScope );
@@ -246,7 +253,7 @@ module Gerda.Kernel {
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────
 	
 		/**  */
-		type IScopedSpaceNameArray = [
+		type IScopedSpaceWithKey = [
 			/** Scope Level */
 			number , 
 			/** String Key */
@@ -260,7 +267,7 @@ module Gerda.Kernel {
 		/** 
 		 * Converts scoped spaces to normal string array for returning
 		 */
-		var GetSpacesByScopedSpacesArray = function ( scopedSpaces: Array<IScopedSpaceNameArray> ): Array<string> {
+		var GetSpacesByScopedSpacesArray = function ( scopedSpaces: Array<IScopedSpaceWithKey> ): Array<string> {
 			var results = new Array<string>( );
 			scopedSpaces.forEach( scopedSpace => {
 				results.push( scopedSpace[ 2 ].trim( ) );
