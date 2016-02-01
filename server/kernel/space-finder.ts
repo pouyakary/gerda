@@ -18,7 +18,7 @@ module Gerda.Kernel {
 			//
 			
 				/** Space name rule */
-				const spaceNameRegexRule: RegExp = /^[a-zA-Z0-9\_ ]+$/;
+				const spaceNameRegexRule: RegExp = /^[a-zA-Z0-9\_\s]+$/;
 
 				/** Suggested spaces within the scope */
 				var scopedSpaces: Array<IScopedSpaceNameArray> = [ 
@@ -57,7 +57,7 @@ module Gerda.Kernel {
 					if ( givenSpaceName.match( spaceNameRegexRule ) ) {
 						
 						// generating the key
-						var nameKey = givenSpaceName.replace( / /g , '' );
+						var nameKey = givenSpaceName.replace( /^\s+|\s+$/gm , '' );
 						
 						// do we have to add it...
 						if ( IsThereNeedToAddSpace( nameKey ) ) {
