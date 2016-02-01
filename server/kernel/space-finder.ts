@@ -16,16 +16,55 @@ module Gerda.Kernel {
 			//
 			// ─── DEFINITIONS ────────────────────────────────────────────────────────────────
 			//
+			
+				/** Space name rule */
+				const spaceNameRegexRule: RegExp = /^[a-zA-Z0-9\_ ]+$/;
 
-			/** Suggested spaces within the scope */
-			var scopedSpaces = new Array<Array<Object>> ();
-			scopedSpaces.push( [ 0 , "return" ] )
+				/** Suggested spaces within the scope */
+				var scopedSpaces: Array<IScopedSpaceNameArray> = [ 
+					[ 0 , 'return' , 'return' ] 
+				];
 				
 				/** To track the scope */
-				var scope_level: number = 1
+				var scopeLevel: number = 0;
 				
 				/** To keep track of the character's location within the blueprint */
-				var characterLocationIndex: number = 0
+				var characterLocationIndex: number = 0;
+				
+				/**
+		 		 * This checks on the list to not to add a spcae that is allready declared.
+				 */
+				var IsThereNeedToAddSpace = function ( spaceKey: string ): boolean {
+					scopedSpaces.forEach( item => {
+						if ( item[ 1 ] == spaceKey ) { 
+							return false;
+						}
+					});
+					return true;
+				}
+				
+				
+				/**
+				 * Addes a space name to the scoped space list if the space name 
+				 * meets the space name regex and also is not allready added.
+				 */
+				var AppendSpace = function ( givenSpaceName: string ) {
+					
+					// some cleaning up
+					givenSpaceName = givenSpaceName.toLowerCase( ).trim( );
+					
+					// checking to see if it's a space name
+					if ( givenSpaceName.match( spaceNameRegexRule ) ) {
+						
+						// generating the key
+						var nameKey = givenSpaceName.replace( / /g , '' );
+						
+						// do we have to add it...
+						if ( IsThereNeedToAddSpace( nameKey ) ) {
+							scopedSpaces.push( [ scopeLevel , nameKey , givenSpaceName ] );
+						}
+					}
+				} 
 
 			//
 			// ─── HEADER SCANNER ─────────────────────────────────────────────────────────────
@@ -35,23 +74,24 @@ module Gerda.Kernel {
 				 * Here what we do is we escape the white spaces and comments till
 				 * we reach the point where the function header.
 				 */
-				for ( ; characterLocationIndex < caretLocation ; characterLocationIndex++ ) {
+				
+				scopeLevel = 0;
+				
+				for (  ; characterLocationIndex < caretLocation ; characterLocationIndex++ ) {
 					
 					//
 					// TOOLS
 					//
 					
-					var currentChar = blueprintText[ characterLocationIndex ]
-					
-					console.log ( currentChar )
+					var currentChar = blueprintText[ characterLocationIndex ];
 					
 					/** 
 					 * Updates the current_char location.
 					 */
 					var NextCharacter = function ( ) {
-						if ( characterLocationIndex < caretLocation - 1 )
-							currentChar = blueprintText[ ++characterLocationIndex ]
-						console.log( currentChar )
+						if ( characterLocationIndex < caretLocation - 1 ) {
+							currentChar = blueprintText[ ++characterLocationIndex ];
+						}
 					}
 					
 					/** 
@@ -59,29 +99,50 @@ module Gerda.Kernel {
 					 * character of `char`.
 					 */
 					var EscapeOneLineComments = function ( char: string ) {
-						NextCharacter( )
-						while ( currentChar != '\n' && characterLocationIndex < caretLocation )
-							NextCharacter( )
+						NextCharacter( );
+						while ( currentChar != '\n' && characterLocationIndex < caretLocation ) {
+							NextCharacter( );
+						}
 					}
 					
 					/**
 					 * Escapes the comments like slash star ... star slash
 					 */
 					var EscapeSlashStarComments = function ( firstChar: string , secondChar: string ) {
-						NextCharacter( )
-						var whileControl: boolean = true
+						NextCharacter( );
+						var whileControl: boolean = true;
 						while ( whileControl && characterLocationIndex < caretLocation - 1 ) {
 							if ( currentChar == secondChar ) {
-								NextCharacter( )
+								NextCharacter( );
 								if ( currentChar == firstChar ) {
-									whileControl = false
+									whileControl = false;
 								} else {
-									characterLocationIndex--
+									characterLocationIndex--;
 								}
 							} else {
-								NextCharacter( )
+								NextCharacter( );
 							}
 						}
+					}
+					
+					
+					/**
+					 * Reads the function header '< ... , ... , ... >' and adds function
+					 * space into the scopedSpaces
+					 */
+					var ReadAndParseHeader = function ( ) {
+						var headerText: string = '';
+						NextCharacter( );
+						// reading the header
+						while ( currentChar != '>' && characterLocationIndex < caretLocation - 1 ) {
+							headerText += currentChar;
+							NextCharacter( );
+						}
+						// getting the spaces and adding them to the scoped spaces
+						var possibleSpaceDeclerations =	headerText.split( ',' );
+						possibleSpaceDeclerations.forEach( possibleSpaceName => {
+							AppendSpace( possibleSpaceName );
+						});
 					}
 					
 					
@@ -91,67 +152,77 @@ module Gerda.Kernel {
 					//
 					
 					if ( currentChar == ' ' || currentChar == '\t' || currentChar == '\n' ) {
-						NextCharacter( )						
+						NextCharacter( );			
 					} else if ( currentChar == '/' && characterLocationIndex + 1 < caretLocation ) {
-						NextCharacter( )
+						NextCharacter( );
 						// where we escape the comments:
 						if ( currentChar == '-' ) {
-							EscapeOneLineComments( '/' )
+							EscapeOneLineComments( '/' );
 						} else if ( currentChar == '*' ) {
-							EscapeSlashStarComments( '/' , '*' )
+							NextCharacter( );
+							EscapeSlashStarComments( '/' , '*' );
 						} 
 					} else if ( currentChar == '<' ) {
-						console.log( "----> reached" )
-						// se we're reading the header
+						ReadAndParseHeader( );
 					} else {
 						/*
 						 * there is no function header so we just get out and continue
 						 * the scannig for normal scope declerations
 						 */
-						break
+						break;
 					}
 				}
 
 			//
 			// ─── BODY SCANNER ───────────────────────────────────────────────────────────────
 			//
+			
+				scopeLevel = 1;
+				var readingWhiteSpaceInSpaceName: boolean = false;
 
 				for ( ; characterLocationIndex < caretLocation ; characterLocationIndex++ ) {
-					var currentChar = blueprintText[ characterLocationIndex ]
-
+					var currentChar = blueprintText[ characterLocationIndex ];
+					
 					// If there's an space decleration...
 					if ( currentChar == '(' ) {
-						var finding: string = ''
-						characterLocationIndex++; currentChar = blueprintText[ characterLocationIndex ]
+						var finding: string = '';
+						NextCharacter( );
 
 						// Finds the stuff between '(' and ',' or ')'
 						while ( currentChar != ',' && currentChar && characterLocationIndex < caretLocation ) {
-							finding += currentChar
-							if ( characterLocationIndex < caretLocation - 1 ) {
-								characterLocationIndex++; currentChar = blueprintText[ characterLocationIndex ]
+							// this system here makes all the white spaces count as one space
+							if ( currentChar == ' ' || currentChar == '\t' || currentChar == '\n' ) {
+								if ( !readingWhiteSpaceInSpaceName ) {
+									finding += ' ';
+									readingWhiteSpaceInSpaceName = true;
+								}
 							} else {
-								break
+								finding += currentChar;
+								readingWhiteSpaceInSpaceName = false;
+							}				
+							
+							if ( characterLocationIndex < caretLocation - 1 ) {
+								NextCharacter( );
+							} else {
+								break;
 							}
 						}
-
-						// Is it an space? this regex will find out
-						if ( finding.match( /[a-zA-Z][a-zA-Z0-9\_]?/ ) ) {
-							if ( IsThereNeedToAddSpace( scopedSpaces , finding ) )
-								scopedSpaces.push( [ scope_level , finding ] )
-						}
+						
+						// done
+						AppendSpace( finding );
 
 					// Taking care of the scoping.
 					} else if ( currentChar == '[' || currentChar == '{' ) {
-						scope_level++
-					} else if ( ( currentChar == ']' || currentChar == '}' ) && scope_level > 0 ) {
-						scopedSpaces = RemoveSpacesInTheCurrentScope( scopedSpaces , scope_level )
-						scope_level--
+						scopeLevel++;
+					} else if ( ( currentChar == ']' || currentChar == '}' ) && scopeLevel > 0 ) {
+						scopedSpaces = RemoveSpacesInTheCurrentScope( scopedSpaces , scopeLevel );
+						scopeLevel--;
 					}
 				}
 
 			// ────────────────────────────────────────────────────────────────────────────────
 
-				return GetSpacesByScopedSpacesArray( scopedSpaces )
+				return GetSpacesByScopedSpacesArray( scopedSpaces );
 
 			// ────────────────────────────────────────────────────────────────────────────────
 		}
@@ -162,38 +233,39 @@ module Gerda.Kernel {
 		 * Takes the scoped spaces array with the scope_level and removes the 
 		 * spaces declared within the current scope level.
 		 */
-		var RemoveSpacesInTheCurrentScope = function ( scopedSpaces: Array<Array<Object>> , scopeLevel: number ) {
-			var newScopedSpacesList = new Array<Array<Object>>()
+		var RemoveSpacesInTheCurrentScope = function ( scopedSpaces: Array<IScopedSpaceNameArray> , scopeLevel: number ) {
+			var newScopedSpacesList = new Array<IScopedSpaceNameArray>( );
 			scopedSpaces.forEach( spaceWithScope => {
-				if ( spaceWithScope[ 0 ] != scopeLevel )
-					newScopedSpacesList.push( spaceWithScope )
-			})
-			return newScopedSpacesList
+				if ( spaceWithScope[ 0 ] != scopeLevel ) {
+					newScopedSpacesList.push( spaceWithScope );
+				}
+			});
+			return newScopedSpacesList;
 		}
 
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────
 	
-		/**
-		 * This checks on the list to not to add a spcae that is allready declared.
-		 */
-		var IsThereNeedToAddSpace = function ( scopedSpaces: Array<Array<Object>> , space: Object ): boolean {
-			scopedSpaces.forEach( item => {
-				if ( item[ 1 ] == space ) return false
-			})
-			return true
-		}
-		
+		/**  */
+		type IScopedSpaceNameArray = [
+			/** Scope Level */
+			number , 
+			/** String Key */
+			string,
+			/** String Show */
+			string
+		];
+				
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────
 
 		/** 
 		 * Converts scoped spaces to normal string array for returning
 		 */
-		var GetSpacesByScopedSpacesArray = function ( scopedSpaces: Array<Array<Object>> ): Array<string> {
-			var results = new Array<string>()
+		var GetSpacesByScopedSpacesArray = function ( scopedSpaces: Array<IScopedSpaceNameArray> ): Array<string> {
+			var results = new Array<string>( );
 			scopedSpaces.forEach( scopedSpace => {
-				results.push( scopedSpace[ 1 ].toString() )
-			})
-			return results
+				results.push( scopedSpace[ 2 ].trim( ) );
+			});
+			return results;
 		}
 	
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────
