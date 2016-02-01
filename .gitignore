@@ -1,3 +1,4 @@
 playground/node_modules/*
 playground/scripts/gerda.js
 playground/scripts/gerda-compiled.js
+playground/releases/*
