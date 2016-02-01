@@ -5,6 +5,10 @@
  *    Author: Pouya Kary <k@karyfoundation.org>
  */
 
+html {
+	overflow: hidden;
+}
+
 body {
 	background-color: #9A9A9A;
 	padding: 			0px;

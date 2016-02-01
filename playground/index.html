@@ -17,7 +17,10 @@
 				var display = document.getElementById ( "display" )
 				var caret_location = pad.selectionStart
 				// Evaluating
+				var start = new Date().getTime();
 				var suggestions = Gerda.Kernel.GetSpaces ( pad.value , caret_location )
+				var finish = new Date().getTime();
+				document.title = "Gerda Playground - " + ( finish - start ) + "ms";
 				console.log ( suggestions )
 				display.innerHTML = arrayToString ( suggestions )
 			}
