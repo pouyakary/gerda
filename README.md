@@ -35,7 +35,7 @@ You can compile the the library to pure JavaScript. In the make file there is a 
 There is also an [electron](http://electron.atom.io) interactive playground that lets you see the suggestion list instantly. You can run it via
 
 ```
-% make electron
+% chmod u+x ./run.sh; ./run.sh
 ```
 	
 	
