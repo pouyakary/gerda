@@ -7,7 +7,7 @@
 /// <reference path="file.ts" />
 /// <reference path="file-object.ts" />
 
-module Arendelle.FileSystem {	
+module Arendelle {	
 	
 	/* ────────────────────────────────────────────────────────────────────────────────────────── *
 	 * :::::::::::::::::::::::::::::: D I R E C T O R Y   C L A S S ::::::::::::::::::::::::::::: *

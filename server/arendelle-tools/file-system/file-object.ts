@@ -4,7 +4,7 @@
 //    Author: Pouya Kary <k@karyfoundation.org>
 //
 
-module Arendelle.FileSystem {
+module Arendelle {
 	
 	/* ────────────────────────────────────────────────────────────────────────────────────────── *
 	 * ::::::::::::::::::::::::::: F I L E   S Y S T E M   O B J E C T :::::::::::::::::::::::::: *
