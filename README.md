@@ -4,7 +4,6 @@ Garda is an intelligent autosuggestion server for web. Specially designed to wor
 
 ![](http://kary.us/GitHubWideImages/gerda/screen.png)
 
-***
 
 ## Functions
 
@@ -38,8 +37,7 @@ There is also an [electron](http://electron.atom.io) interactive playground that
 ```
 % make electron
 ```
-		
-***		
+	
 	
 ## License
 
