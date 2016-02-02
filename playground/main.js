@@ -28,8 +28,6 @@
 			width: 800 , height: 400 
 		});
 		mainWindow.loadURL( 'file://' + __dirname + '/index.html' );
-		// mainWindow.webContents.openDevTools( );
-		mainWindow.setMenu( null );
 		mainWindow.on( 'closed' , function() {
 			mainWindow = null;
 		})

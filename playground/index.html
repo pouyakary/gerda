@@ -5,24 +5,20 @@
 		<link rel="stylesheet" href="styles/ui.css">
 		<script>
 			function arrayToString ( spaces ) {
-				var results = ""
+				var results = "";
 				spaces.forEach ( function ( space ) {
-					results += '<div class="item">@' + space + '</div>'
-				})
-				return results
+					results += '<div class="item">@' + space + '</div>';
+				});
+				return results;
 			}
 			function updateSuggestions () {
 				// Informatin we need
-				var pad = document.getElementById ( "pad" )
-				var display = document.getElementById ( "display" )
-				var caret_location = pad.selectionStart
-				// Evaluating
-				var start = new Date().getTime();
-				var suggestions = Gerda.Kernel.GetSpaces ( pad.value , caret_location )
-				var finish = new Date().getTime();
-				document.title = "Gerda Playground - " + ( finish - start ) + "ms";
-				console.log ( suggestions )
-				display.innerHTML = arrayToString ( suggestions )
+				var pad = document.getElementById ( "pad" );
+				var display = document.getElementById ( "display" );
+				var caret_location = pad.selectionStart;
+				// Evaluatings
+				var suggestions = Gerda.Kernel.GetSpaces ( pad.value , caret_location );
+				display.innerHTML = arrayToString ( suggestions );
 			}
 		</script>
 	</head>
