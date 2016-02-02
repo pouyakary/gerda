@@ -13,7 +13,7 @@ cd playground/scripts/
 uglifyjs gerda-compiled.js --output gerda.js --mangle
 
 # Running the Electron Playground
-npm install && npm start
+npm start
 
 # Done
 cd ../..
