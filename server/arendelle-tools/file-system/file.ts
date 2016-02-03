@@ -1,5 +1,5 @@
 //
-// Gerda - The optimized Arendelle itelegent auto suggestion's server
+// Standard Arendelle File System Object Model for TypeScript Code Bases
 //    Copyright 2016 Kary Foundation, Inc.
 //    Author: Pouya Kary <k@karyfoundation.org>
 //
@@ -19,39 +19,63 @@ module Arendelle {
 		// ─── STORAGE ────────────────────────────────────────────────────────────────────
 		//
 		
-			/** Where we store the file content */
-			Content: string
+			/** 
+			 * Where we store the file content (the string within the file) 
+			 */
+			Content: string;
 			
-			/** File Type */
-			Type: FileType
+			/** 
+			 * File Type: "Arendele" or "Space"
+			 */
+			Type: 	FileType;
 		
 		//
 		// ─── FUNCS ──────────────────────────────────────────────────────────────────────
 		//
 		
-			/** Class constructor */
-			constructor ( name: string , path: string , content: string , space: boolean) {
-				super( path , name )
-				this.Content = content
+			/**
+			 * ***
+			 * Constructs an Arendele file. 
+			 * ***
+			 * @param	name		The name of the file (For example the file path is:
+			 * 						`a/b/c/abc.arendelle` then the file name is `abc`)
+			 * @param 	content		The string content within your file.
+			 * @param	space		Pass `true`	if your file is an `.space` file and 
+			 * 						`false` if it's an `.arendelle` file.
+			 */
+			constructor ( name: string , content: string , space: boolean) {
+				super( name );
+				this.Content = content;
 				if ( space )
-					this.Type = FileType.Space
+					this.Type = FileType.Space;	
 				else
-					this.Type = FileType.Arendelle
+					this.Type = FileType.Arendelle;
 			}
 			
+		// ────────────────────────────────────────────────────────────────────────────────
 			
-			/** Generates the full path of the file */
-			FullPath ( ): string {
-				return this.Path + '/' + this.Name + this.GetFileTypeEnd()
-			}
-			
-			
-			/** Get's the file type string for the Arendelle files */
+			/** 
+			 * ***
+			 * Get's the file type string for the Arendelle files
+			 * ***
+			 */
 			GetFileTypeEnd ( ): string {
 				if ( this.Type == FileType.Space )
-					return '.space'
+					return '.space';
 				else
-					return '.arendelle'
+					return '.arendelle';
+			}
+		
+		// ────────────────────────────────────────────────────────────────────────────────
+			/**
+			 * ***
+			 * Getts the pull file path way including it's file tye ending
+			 * ***
+			 * **NOTE:** the `.GetFullPath( )` provided by the `FileSystemObject`
+			 * must never be used for the files as it does not include the file type
+			 */
+			GutFullFilePath ( ): string {
+				return this.GetFullPath( ) + this.GetFileTypeEnd( );
 			}
 		
 		// ────────────────────────────────────────────────────────────────────────────────
@@ -69,4 +93,5 @@ module Arendelle {
 		/** Arendelle '.space' stored space files */
 		Space	
 	}
+	
 }
