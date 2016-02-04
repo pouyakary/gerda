@@ -23,13 +23,13 @@ header {
 
 .kary-header-logo {
 	float: right;
-	padding: 13px;
-	padding-left: 20px;
+	padding-top: 14px;
+	padding-right: 20px;
 }
 
 .gerda-header-name {
-	padding: 8px;
-	padding-left: 10px;
+	padding-top: 9px;
+	padding-left: 13px;
 	float: left;
 }
 
