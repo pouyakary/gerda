@@ -31,6 +31,13 @@ module Gerda.Kernel {
 				/** To keep track of the character's location within the blueprint */
 				var characterLocationIndex: number = 0;
 				
+				/** 
+				 * Where we have to stop parsing
+				 * **NOTE** if this changes into: `caretLocation - 1`, It will have a
+				 * better runtime but instead will loose the intelligence
+				 */
+				let whereToStop = caretLocation - 1;
+				
 			//
 			// ─── FUNCTIONS ──────────────────────────────────────────────────────────────────
 			//
@@ -79,7 +86,7 @@ module Gerda.Kernel {
 				 * we reach the point where the function header.
 				 */
 
-				for ( scopeLevel = 0 ; characterLocationIndex < caretLocation ; characterLocationIndex++ ) {
+				for ( scopeLevel = 0 ; characterLocationIndex < whereToStop ; characterLocationIndex++ ) {
 					
 					//
 					// TOOLS
@@ -91,7 +98,7 @@ module Gerda.Kernel {
 					 * Updates the current_char location.
 					 */
 					var NextCharacter = function ( ) {
-						if ( characterLocationIndex < caretLocation - 1 ) {
+						if ( characterLocationIndex < whereToStop ) {
 							currentChar = blueprintText[ ++characterLocationIndex ];
 						}
 					}
@@ -102,7 +109,7 @@ module Gerda.Kernel {
 					 */
 					var EscapeOneLineComments = function ( char: string ) {
 						NextCharacter( );
-						while ( currentChar != '\n' && characterLocationIndex < caretLocation ) {
+						while ( currentChar != '\n' && characterLocationIndex < whereToStop ) {
 							NextCharacter( );
 						}
 					}
@@ -113,7 +120,7 @@ module Gerda.Kernel {
 					var EscapeSlashStarComments = function ( firstChar: string , secondChar: string ) {
 						NextCharacter( );
 						var whileControl: boolean = true;
-						while ( whileControl && characterLocationIndex < caretLocation - 1 ) {
+						while ( whileControl && characterLocationIndex < whereToStop ) {
 							if ( currentChar == secondChar ) {
 								NextCharacter( );
 								if ( currentChar == firstChar ) {
@@ -123,6 +130,25 @@ module Gerda.Kernel {
 								}
 							} else {
 								NextCharacter( );
+							}
+						}
+					}
+					
+					
+					/**
+					 * Escapes strings
+					 */
+					
+					var EscapeString = function ( stringSign: string ) {
+						var whileControl: boolean = true;
+						while ( whileControl && characterLocationIndex < whereToStop ) {
+							NextCharacter( );
+							if ( currentChar == stringSign ) {
+								whileControl = false;
+							} else if ( currentChar == '\\' ) {
+								if ( characterLocationIndex < whereToStop - 2 ) {
+									characterLocationIndex++;
+								}
 							}
 						}
 					}
@@ -156,7 +182,7 @@ module Gerda.Kernel {
 					
 					if ( currentChar == ' ' || currentChar == '\t' || currentChar == '\n' ) {
 						NextCharacter( );			
-					} else if ( currentChar == '/' && characterLocationIndex + 1 < caretLocation ) {
+					} else if ( currentChar == '/' && characterLocationIndex < whereToStop ) {
 						NextCharacter( );
 						
 						// where we escape the comments:
@@ -185,7 +211,7 @@ module Gerda.Kernel {
 			
 				var readingWhiteSpaceInSpaceName: boolean = false;
 
-				for ( scopeLevel = 1 ; characterLocationIndex < caretLocation ; characterLocationIndex++ ) {
+				for ( scopeLevel = 1 ; characterLocationIndex < whereToStop ; characterLocationIndex++ ) {
 					var currentChar = blueprintText[ characterLocationIndex ];
 					
 					// If there's an space decleration...
@@ -194,7 +220,7 @@ module Gerda.Kernel {
 						NextCharacter( );
 
 						// Finds the stuff between '(' and ',' or ')'
-						while ( currentChar != ',' && currentChar && characterLocationIndex < caretLocation ) {
+						while ( currentChar != ',' && currentChar && characterLocationIndex < whereToStop ) {
 							
 							// this system here makes all the white spaces count as one space
 							if ( currentChar == ' ' || currentChar == '\t' || currentChar == '\n' ) {
@@ -207,18 +233,41 @@ module Gerda.Kernel {
 								readingWhiteSpaceInSpaceName = false;
 							}				
 							
-							if ( characterLocationIndex < caretLocation - 1 ) {
+							if ( characterLocationIndex < whereToStop ) {
 								NextCharacter( );
 							} else {
 								break;
 							}
 						}
-						
 						// done
 						AppendSpace( finding );
+					}
+
+
+					// Escaping Comments
+					else if ( currentChar == '/' ) {
+						if ( characterLocationIndex < whereToStop - 1 ) {
+							NextCharacter( );
+							if ( currentChar == '/' ) {
+								console.log( 'something ');
+								EscapeOneLineComments( '/' );
+							} else if ( currentChar == '*' ) {
+								EscapeSlashStarComments( '/', '*' );
+							} else {
+								NextCharacter( );
+							}
+						}
+					}
+						
+						
+					// Epscaping strings
+					else if ( currentChar == "'" || currentChar == '"' ) {
+						EscapeString( currentChar );
+					} 
+
 
 					// Taking care of the scoping.
-					} else if ( currentChar == '[' || currentChar == '{' ) {
+					else if ( currentChar == '[' || currentChar == '{' ) {
 						scopeLevel++;
 					} else if ( ( currentChar == ']' || currentChar == '}' ) && scopeLevel > 0 ) {
 						scopedSpaces = RemoveSpacesInTheCurrentScope( scopedSpaces , scopeLevel );
