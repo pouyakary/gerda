@@ -9,6 +9,7 @@
 		"server/arendelle-tools/file-system/file.ts",
 		"server/arendelle-tools/file-system/directory.ts",
 		"server/arendelle-tools/file-system/file-object.ts",
-		"server/kernel/space-finder.ts"
+		"server/kernel/space-finder.ts",
+		"main.ts"
 	]
 }
