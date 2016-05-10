@@ -1,15 +1,8 @@
 {	
 	"compilerOptions": {
-		"module": "commonjs",
+		"module": "amd",
 		"noImplicitAny": true,
 		"preserveConstEnums": true, 
         "out": "playground/scripts/gerda-compiled.js"
-    },
-    "files": [
-		"server/arendelle-tools/file-system/file.ts",
-		"server/arendelle-tools/file-system/directory.ts",
-		"server/arendelle-tools/file-system/file-object.ts",
-		"server/kernel/space-finder.ts",
-		"main.ts"
-	]
+    }
 }
