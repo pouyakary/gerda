@@ -336,7 +336,7 @@ module Gerda.Kernel {
 					var currentChar = element[ searchStringsIndex ];
 					if ( currentChar == userInput[ currentSearchCharIndex ] ) {
 						if ( currentSearchCharIndex < userInput.length ) {
-							elementToBeAdded += '<span class="itemFoundChar">' + currentChar + '</span>';
+							elementToBeAdded += '<span class="GerdaItemHighlighters">' + currentChar + '</span>';
 							currentSearchCharIndex++;
 						} else {
 							elementToBeAdded += currentChar;
