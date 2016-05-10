@@ -110,8 +110,12 @@
     function hideSuggestionsOnBadKeys( event ) {
         var key_code = event.which;
         if ( key_code == 8 || key_code == 46 ) {
-            hideSuggestions();
-            return;
+            if ( currentSequence.length > 0 ) {
+                currentSequence = currentSequence.slice( 0 , -1 );
+                updateSuggestions( );
+            } else {
+                hideSuggestions( );
+            }
         }
     }
 
@@ -150,7 +154,6 @@
 
     function updateSuggestionBox( ) {
         var position = getSelectionCoords( );
-        document.title = position.x;
         var box = document.getElementById( "suggestions" );
         box.style.position = "fixed";
         box.style.left = ( position.x + 15 ) + "px";
