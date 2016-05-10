@@ -10,7 +10,7 @@ html {
 }
 
 body {
-	background-color: white;
+	background-color: #2E2E2E;
 	padding: 			0px;
 	margin: 			0px;
 }
@@ -18,7 +18,7 @@ body {
 header {
 	height: 50px;
 	width: 100vw;
-	background-color: #eee;
+	background-color: #171717;
 }
 
 .kary-header-logo {
@@ -34,9 +34,9 @@ header {
 }
 
 #editor {
-	background-color: #eee;
+	background-color: #424242;
 	border-radius:     5px;
-	color:           #434343;
+	color:           #eee;
 	border:            0;
 	padding:           40px;
 	padding-right:     20px;
@@ -81,7 +81,7 @@ header {
 
 .item {
 	background-color:  white;
-	color:             #989898;
+	color:             #424242;
 	font-family:       Consolas;
 	padding:           7px;
 	margin-left:       10px;
