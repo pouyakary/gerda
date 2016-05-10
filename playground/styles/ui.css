@@ -10,7 +10,7 @@ html {
 }
 
 body {
-	background-color: #2E2E2E;
+	background-color: white;
 	padding: 			0px;
 	margin: 			0px;
 }
@@ -18,7 +18,7 @@ body {
 header {
 	height: 50px;
 	width: 100vw;
-	background-color: #171717;
+	background-color: #eee;
 }
 
 .kary-header-logo {
@@ -33,28 +33,42 @@ header {
 	float: left;
 }
 
-textarea {
-	background-color:#424242;
+#editor {
+	background-color: #eee;
 	border-radius:     5px;
-	color:           white;
+	color:           #434343;
 	border:            0;
 	padding:           40px;
 	padding-right:     20px;
-	width:             calc( 50vw - 60px );
-	height:            calc( 100vh - 110px );
+	position: fixed;
+	left: 30px;
+	top: 70px;
+	width: 			calc( 100vw - 120px );
+	height: 		calc( 100vh - 200px );
 	font-family:       Consolas;
 	font-size:         14px;
 	outline-color:     transparent;
 	outline-style:     none;
 	resize:            none;
-	overflow: 			scroll;
+	overflow: 		   scroll;
 }
 
-.half {
-	padding-top: 	30px;
-	float: 			left;
-	width: 			50vw;
+
+#suggestions {
+	display: none;
+	position: relative;
+	left: 0;
+	right: 0;
+	width: 170px;
+	overflow: scroll;
+	/*background-color: #2E2E2E;
+	border-radius: 10px;*/
+	padding: 0px;
+	padding-bottom: 15px;
+	overflow: scroll;
+	display: inline;
 }
+
 
 #display {
 	border-radius: 		5px;
@@ -67,7 +81,7 @@ textarea {
 
 .item {
 	background-color:  white;
-	color:             black;
+	color:             #989898;
 	font-family:       Consolas;
 	padding:           7px;
 	margin-left:       10px;
@@ -76,7 +90,14 @@ textarea {
 	padding-right:     13px;
 	padding-left:      13px;
 	font-size:         14px;
-	float:             left;
+	clear: left;
+	float: left;
+}
+
+.itemFoundChar {
+	font-family:       Consolas;
+	color: dodgerblue;
+	font-size: 14;
 }
 
 @font-face { 
