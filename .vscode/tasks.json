@@ -1,8 +1,8 @@
 
 {
 	"version": "0.1.0",
-	"command": "make",
+	"command": "bash",
 	"isShellCommand": true,
 	"showOutput": "silent",
-	"args": [ "build" ]
+	"args": [ "run.sh" ]
 }
