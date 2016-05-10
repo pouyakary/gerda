@@ -323,6 +323,34 @@ module Gerda.Kernel {
 			});
 			return results;
 		}
+		
+	// ────────────────────────────────────────────────────────────────────────────────────────────────────
+		
+		export function FilterSuggestions( suggestions: Array<string> , userInput: string ) {
+			var results = new Array<string>( );
+			for ( var index = 0; index < suggestions.length; index++ ) {
+				var element = suggestions[ index ];
+				var currentSearchCharIndex = 0;
+				var elementToBeAdded = '';
+				for ( var searchStringsIndex = 0; searchStringsIndex < element.length; searchStringsIndex++) {
+					var currentChar = element[ searchStringsIndex ];
+					if ( currentChar == userInput[ currentSearchCharIndex ] ) {
+						if ( currentSearchCharIndex < userInput.length ) {
+							elementToBeAdded += '<span class="itemFoundChar">' + currentChar + '</span>';
+							currentSearchCharIndex++;
+						} else {
+							elementToBeAdded += currentChar;
+						}
+					} else {
+						elementToBeAdded += currentChar;
+					}
+				}
+				if ( currentSearchCharIndex >= userInput.length ) {
+					results.push( elementToBeAdded );
+				}
+			}
+			return results;
+		}
 	
 	// ────────────────────────────────────────────────────────────────────────────────────────────────────
 }
