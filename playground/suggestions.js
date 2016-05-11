@@ -159,6 +159,10 @@
             display.innerHTML = suggestions;
         }
     }
+
+//
+// ─── IS SHOWING ENOUGH SUGGESTIONS ──────────────────────────────────────────────
+//
     
     function isShowingTheSuggestionEnough( ) {
         if ( suggestions.children.length == 1 ) {
@@ -241,3 +245,5 @@
         isRunningOnSuggestionMode = false;
         suggestions.style.display = 'none';
     }
+
+// ────────────────────────────────────────────────────────────────────────────────
