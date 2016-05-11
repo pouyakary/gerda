@@ -128,9 +128,7 @@
 //
     
     function endSuggestions( ) {
-        if ( isRunningOnSuggestionMode ) {
-            hideSuggestions( );
-        }
+        hideSuggestions( );
     }
     
 //
@@ -151,9 +149,7 @@
         var caret_location = getCaretPosition( editor );
         var key_code = event.which || event.keyCode;
         var current_char = String.fromCharCode( key_code );
-        
-        console.log( caret_location )
-       
+
         updateSuggestionScreenDisplayStatus( current_char );
         isShowingTheSuggestionEnough( );
 
