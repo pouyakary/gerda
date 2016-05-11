@@ -108,14 +108,38 @@
 //
 
     function hideSuggestionsOnBadKeys( event ) {
-        var key_code = event.which;
-        if ( key_code == 8 || key_code == 46 ) {
-            if ( currentSequence.length > 0 ) {
-                currentSequence = currentSequence.slice( 0 , -1 );
-                updateSuggestions( );
-            } else {
-                hideSuggestions( );
+        try {
+            var key_code = event.which || event.keyCode;
+            if ( key_code == 8 || key_code == 46 ) {
+                if ( currentSequence.length > 0 ) {
+                    currentSequence = currentSequence.slice( 0 , -1 );
+                    updateSuggestions( );
+                } else {
+                    hideSuggestions( );
+                }
             }
+        } catch ( err ) {
+            console.log( err );
+        }
+    }
+    
+//
+// ─── HIDE SUGGESTIONS ───────────────────────────────────────────────────────────
+//
+    
+    function endSuggestions( ) {
+        if ( isRunningOnSuggestionMode ) {
+            hideSuggestions( );
+        }
+    }
+    
+//
+// ─── HIDE ON SCROLL ─────────────────────────────────────────────────────────────
+//
+
+    function updateSuggestionsOnScroll( ) {
+        if ( isRunningOnSuggestionMode ) {
+            updateSuggestionBox( );
         }
     }
 
@@ -125,15 +149,28 @@
 
     function updateSuggestions( event ) {        
         var caret_location = getCaretPosition( editor );
-        var key_code = event.which;
+        var key_code = event.which || event.keyCode;
         var current_char = String.fromCharCode( key_code );
+        
+        console.log( caret_location )
        
         updateSuggestionScreenDisplayStatus( current_char );
+        isShowingTheSuggestionEnough( );
 
         if ( isRunningOnSuggestionMode ) {
             updateSuggestionBox( );
             var suggestions = getSuggestionsInHTMLFormat( editor.innerText , caret_location );
             display.innerHTML = suggestions;
+        }
+    }
+    
+    function isShowingTheSuggestionEnough( ) {
+        if ( suggestions.children.length == 1 ) {
+            var sizeOfCurrent = currentSequence.replace( /\s/g , '' );
+            var firstChildSzie = suggestions.firstChild( ).length;
+            if ( sizeOfCurrent >= firstChildSzie ) {
+                hideSuggestions( );
+            }
         }
     }
     
