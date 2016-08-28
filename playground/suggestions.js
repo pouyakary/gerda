@@ -109,7 +109,7 @@
 
     function hideSuggestionsOnBadKeys( event ) {
         try {
-            var key_code = event.which || event.keyCode;
+            var key_code = getKeyboardKeyByOnKeyboardClickedEvent( event );
             if ( key_code == 8 || key_code == 46 ) {
                 if ( currentSequence.length > 0 ) {
                     currentSequence = currentSequence.slice( 0 , -1 );
@@ -119,7 +119,7 @@
                 }
             }
         } catch ( err ) {
-            console.log( err );
+            console.log( 'KFGerda: Could not hide suggestions.' );
         }
     }
     
@@ -142,22 +142,38 @@
     }
 
 //
+// ─── GET KEYBOARD KEY USING THE ON KEYDOWN EVENT BY EVENT ───────────────────────
+//
+
+    function getKeyboardKeyByOnKeyboardClickedEvent( event ) {
+        try {
+             return event.which || event.keyCode;
+        } catch ( err ) {
+            return 0;
+        }
+    }
+
+//
 // ─── UPDATE SUGGESTIONS ─────────────────────────────────────────────────────────
 //
 
-    function updateSuggestions( event ) {        
+    function updateSuggestions( event ) {
+        
+        // Fetching basic information  
         var caret_location = getCaretPosition( editor );
-        var key_code = event.which || event.keyCode;
+        var key_code = getKeyboardKeyByOnKeyboardClickedEvent( event );
         var current_char = String.fromCharCode( key_code );
 
+        // Checking the status of suggestion system
         updateSuggestionScreenDisplayStatus( current_char );
         isShowingTheSuggestionEnough( );
-
+        
+        // If is on suggestion...
         if ( isRunningOnSuggestionMode ) {
             updateSuggestionBox( );
-            var suggestions = getSuggestionsInHTMLFormat( editor.innerText , caret_location );
-            display.innerHTML = suggestions;
+            display.innerHTML = getSuggestionsInHTMLFormat( editor.innerText , caret_location );
         }
+        
     }
 
 //
