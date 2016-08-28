@@ -6,8 +6,8 @@ Currently [Arendelle for Visual Studio Code](https://marketplace.visualstudio.co
 
 If you wanna play online with Gerda, Two versions of it are available via Kary Foundation's Playgrounds:
 
-- [Gerda v1 -- With Static UI](http://www.karyfoundation.org/research/playgrounds/gerda/01/)
-- [Gerda v2 -- With Interactive Suggestion Autocomplete UI](http://www.karyfoundation.org/research/playgrounds/gerda/02/)
+- [Gerda v1 &mdash; With Static UI](http://www.karyfoundation.org/research/playgrounds/gerda/01/)
+- [Gerda v2 &mdash; With Interactive Suggestion Autocomplete UI](http://www.karyfoundation.org/research/playgrounds/gerda/02/)
 
 ![](https://cloud.githubusercontent.com/assets/2157285/18032698/43e36866-6d23-11e6-8e46-0d875358367a.jpg)
 
